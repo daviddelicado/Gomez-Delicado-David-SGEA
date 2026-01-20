@@ -35,7 +35,6 @@
     </record>
 
     <!-- ======================================================
-         Vista LISTA de las categorías (antes: tree ❌, ahora: list ✅)
          ====================================================== -->
     <record id="view_tree_categoria" model="ir.ui.view">
         <field name="name">Categoría Lista</field>
