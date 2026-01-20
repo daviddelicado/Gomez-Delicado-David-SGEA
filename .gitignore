@@ -3,3 +3,5 @@ volumesOdoo/odoo/*
 odoo_db_backup.sql
 postgres_data_.tars
 postgres_backup.tar
+.idea/*
+*.pyc*
