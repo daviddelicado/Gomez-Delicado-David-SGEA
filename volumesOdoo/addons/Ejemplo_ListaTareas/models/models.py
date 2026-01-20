@@ -4,56 +4,10 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
-
-# a.1 Gestión de Socios
-class ListaTareasSocio(models.Model):
-    _name = 'lista_tareas.socio'
-    _description = 'Gestión de Socios'
-
-    name = fields.Char(string='Nombre', required=True)
-    apellido = fields.Char(string='Apellido', required=True)
-    identificador = fields.Char(string='ID Socio', required=True)
-
-
-# a.2.1 El modelo de cómic (usaremos el de tareas como base o uno nuevo)
-# Para seguir tu enunciado, creamos el modelo de Cómic referencia
-class ListaTareasComic(models.Model):
-    _name = 'lista_tareas.comic'
-    _description = 'Referencia de Cómic'
-    name = fields.Char(string='Título del Cómic', required=True)
-    autor = fields.Char(string='Autor')
-
-
-# a.2.2 Ejemplares de préstamo
-class ListaTareasPrestamo(models.Model):
-    _name = 'lista_tareas.prestamo'
-    _description = 'Ejemplares de préstamo'
-
-    comic_id = fields.Many2one('lista_tareas.comic', string='Cómic', required=True)
-    socio_id = fields.Many2one('lista_tareas.socio', string='Prestado a')
-    fecha_inicio = fields.Date(string='Fecha de Inicio', default=fields.Date.today)
-    fecha_final = fields.Date(string='Fecha Prevista de Vuelta')
-
-    # a.2.2.1 La data de préstec no pot ser posterior al dia de hui.
-    @api.constrains('fecha_inicio')
-    def _check_fecha_inicio(self):
-        for record in self:
-            if record.fecha_inicio and record.fecha_inicio > fields.Date.today():
-                raise ValidationError("La fecha de préstamo no puede ser posterior a hoy.")
-
-    # a.2.2.2 La data prevista de tornada no pot ser anterior al dia de hui.
-    @api.constrains('fecha_final')
-    def _check_fecha_final(self):
-        for record in self:
-            if record.fecha_final and record.fecha_final < fields.Date.today():
-                raise ValidationError("La fecha de vuelta no puede ser anterior a hoy.")
-
-
-# 🏷️ NUEVO MODELO PARA CATEGORÍAS
-# Se crea para poder clasificar las tareas
 class ListaTareasCategoria(models.Model):
     _name = 'lista_tareas.categoria'
-    _description = 'Categorías de tareas'
+    _description = 'Categoría de Tareas'
+
     name = fields.Char(string='Nombre de Categoría', required=True)
 
 # Creamos nuestro modelo de datos principal.

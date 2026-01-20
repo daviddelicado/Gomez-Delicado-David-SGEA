@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_biblioteca_socio" model="ir.actions.act_window">
+        <field name="name">Socios</field>
+        <field name="res_model">biblioteca.socio</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_biblioteca_prestamo" model="ir.actions.act_window">
+        <field name="name">Préstamos</field>
+        <field name="res_model">biblioteca.prestamo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_biblioteca_socio"
+              name="Socios"
+              parent="biblioteca_base_menu"
+              action="action_biblioteca_socio"
+              sequence="20"/>
+
+    <menuitem id="menu_biblioteca_prestamo"
+              name="Préstamos"
+              parent="biblioteca_base_menu"
+              action="action_biblioteca_prestamo"
+              sequence="30"/>
+
+    <record id="view_biblioteca_socio_tree" model="ir.ui.view">
+        <field name="name">biblioteca.socio.tree</field>
+        <field name="model">biblioteca.socio</field>
+        <field name="arch" type="xml">
+            <tree string="Lista de Socios">
+                <field name="identificador"/>
+                <field name="name"/>
+                <field name="apellido"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_biblioteca_prestamo_tree" model="ir.ui.view">
+        <field name="name">biblioteca.prestamo.tree</field>
+        <field name="model">biblioteca.prestamo</field>
+        <field name="arch" type="xml">
+            <tree string="Préstamos Actuales" decoration-danger="fecha_final &lt; current_date">
+                <field name="comic_id"/>
+                <field name="socio_id"/>
+                <field name="fecha_inicio"/>
+                <field name="fecha_final"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -1,11 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 acl_lista_tareas,lista_tareas.lista_default,model_lista_tareas_lista,base.group_user,1,1,1,1
-access_lista_tareas_lista,access.lista.tareas.lista,model_lista_tareas_lista,"",1,1,1,1
-access_lista_tareas_categoria,access.lista.tareas.categoria,model_lista_tareas_categoria,"",1,1,1,1
-access_socio,access.socio,model_lista_tareas_socio,"",1,1,1,1
-access_comic,access.comic,model_lista_tareas_comic,"",1,1,1,1
-access_prestamo,access.prestamo,model_lista_tareas_prestamo,"",1,1,1,1
-access_instituto_ciclo,access.instituto.ciclo,model_instituto_ciclo,"",1,1,1,1
-access_instituto_modulo,access.instituto.modulo,model_instituto_modulo,"",1,1,1,1
-access_instituto_alumne,access.instituto.alumne,model_instituto_alumne,"",1,1,1,1
-access_instituto_professor,access.instituto.professor,model_instituto_professor,"",1,1,1,1
+access_lista_tareas_categoria,lista_tareas.categoria,model_lista_tareas_categoria,base.group_user,1,1,1,1
+access_lista_tareas_lista,lista_tareas.lista,model_lista_tareas_lista,base.group_user,1,1,1,1
+access_instituto_ciclo,instituto.ciclo,model_instituto_ciclo,base.group_user,1,1,1,1
+access_instituto_modulo,instituto.modulo,model_instituto_modulo,base.group_user,1,1,1,1
+access_instituto_alumne,instituto.alumne,model_instituto_alumne,base.group_user,1,1,1,1
+access_instituto_professor,instituto.professor,model_instituto_professor,base.group_user,1,1,1,1

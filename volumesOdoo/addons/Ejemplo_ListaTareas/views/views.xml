@@ -2,6 +2,18 @@
 <odoo>
     <data>
 
+        <record model="ir.actions.act_window" id="action_lista_tareas">
+            <field name="name">Listado de tareas</field>
+            <field name="res_model">lista_tareas.lista</field>
+            <field name="view_mode">tree,form,kanban,calendar</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_lista_tareas_categoria">
+            <field name="name">Categorías de Tareas</field>
+            <field name="res_model">lista_tareas.categoria</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <record model="ir.actions.act_window" id="action_instituto_ciclo">
             <field name="name">Ciclos Formativos</field>
             <field name="res_model">instituto.ciclo</field>
@@ -14,31 +26,22 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_lista_tareas">
-            <field name="name">Listado de tareas</field>
-            <field name="res_model">lista_tareas.lista</field>
-            <field name="view_mode">list,form,kanban,calendar</field>
-        </record>
-
-        <record model="ir.actions.act_window" id="action_lista_tareas_socio">
-            <field name="name">Socios</field>
-            <field name="res_model">lista_tareas.socio</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <record model="ir.actions.act_window" id="action_lista_tareas_prestamo">
-            <field name="name">Préstamos de Cómics</field>
-            <field name="res_model">lista_tareas.prestamo</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
         <record model="ir.actions.act_window" id="action_instituto_modulo">
             <field name="name">Módulos</field>
             <field name="res_model">instituto.modulo</field>
             <field name="view_mode">tree,form</field>
         </record>
 
+        <menuitem id="lista_tareas_menu_root" name="Listado de tareas" sequence="10"/>
 
-         <menuitem id="lista_tareas_menu_root" name="Listado de tareas" sequence="10"/>
+        <menuitem id="lista_tareas_menu_1" name="Gestión de tareas"
+                  parent="lista_tareas_menu_root" sequence="20"/>
+
+        <menuitem id="lista_tareas_menu_1_list" name="Ver tareas"
+                  parent="lista_tareas_menu_1" action="action_lista_tareas" sequence="10"/>
+
+        <menuitem id="lista_tareas_menu_categoria" name="Categorías"
+                  parent="lista_tareas_menu_1" action="action_lista_tareas_categoria" sequence="20"/>
 
         <menuitem id="menu_instituto_raiz" name="Instituto" sequence="50"/>
 
@@ -51,77 +54,13 @@
         <menuitem id="menu_modulos" name="Módulos"
                   parent="menu_instituto_raiz" action="action_instituto_modulo" sequence="30"/>
 
-        <menuitem id="lista_tareas_menu_1" name="Gestión de tareas"
-                  parent="lista_tareas_menu_root" sequence="20"/>
-
-        <menuitem id="lista_tareas_menu_1_list" name="Ver tareas"
-                  parent="lista_tareas_menu_1" action="action_lista_tareas" sequence="30"/>
-
-        <menuitem id="menu_biblioteca_raiz" name="Biblioteca Cómics"
-                  parent="lista_tareas_menu_root" sequence="40"/>
-
-        <menuitem id="menu_socios" name="Socios"
-                  parent="menu_biblioteca_raiz" action="action_lista_tareas_socio" sequence="10"/>
-
-        <menuitem id="menu_prestamos" name="Préstamos"
-                  parent="menu_biblioteca_raiz" action="action_lista_tareas_prestamo" sequence="20"/>
-
-
-        <record id="view_instituto_modulo_tree" model="ir.ui.view">
-    <field name="name">instituto.modulo.tree</field>
-    <field name="model">instituto.modulo</field>
-    <field name="arch" type="xml">
-        <tree>
-            <field name="name"/>
-            <field name="ciclo_id"/>
-            <field name="professor_id"/>
-        </tree>
-    </field>
-</record>
-
-<record id="view_instituto_alumne_tree" model="ir.ui.view">
-    <field name="name">instituto.alumne.tree</field>
-    <field name="model">instituto.alumne</field>
-    <field name="arch" type="xml">
-        <tree>
-            <field name="name"/>
-            <field name="modulo_ids" widget="many2many_tags"/>
-        </tree>
-    </field>
-</record>
-
-        <record id="view_socio_tree" model="ir.ui.view">
-    <field name="name">lista_tareas.socio.tree</field>
-    <field name="model">lista_tareas.socio</field>
-    <field name="arch" type="xml">
-        <tree>
-            <field name="identificador"/>
-            <field name="name"/>
-            <field name="apellido"/>
-        </tree>
-    </field>
-</record>
-
-<record id="view_prestamo_tree" model="ir.ui.view">
-    <field name="name">lista_tareas.prestamo.tree</field>
-    <field name="model">lista_tareas.prestamo</field>
-    <field name="arch" type="xml">
-        <tree>
-            <field name="comic_id"/>
-            <field name="socio_id"/>
-            <field name="fecha_inicio"/>
-            <field name="fecha_final"/>
-        </tree>
-    </field>
-</record>
-
         <record id="view_lista_tareas_list" model="ir.ui.view">
             <field name="name">lista.tareas.list</field>
             <field name="model">lista_tareas.lista</field>
             <field name="arch" type="xml">
                 <tree string="Tareas" decoration-danger="vencida == True" decoration-success="realizada == True">
                     <field name="tarea"/>
-                    <field name="categoria_id" widget="many2one_tags"/>
+                    <field name="categoria_id"/>
                     <field name="user_id" widget="many2user_avatar"/>
                     <field name="data_limit" widget="remaining_days"/>
                     <field name="prioridad"/>
@@ -153,11 +92,35 @@
                             <group string="Plazos y Estado">
                                 <field name="data_limit"/>
                                 <field name="vencida" invisible="not vencida" decoration-danger="vencida == True"/>
-                                <field name="prioridad"/> <field name="urgente" readonly="1"/>
+                                <field name="prioridad"/>
+                                <field name="urgente" readonly="1"/>
                             </group>
                         </group>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_instituto_modulo_tree" model="ir.ui.view">
+            <field name="name">instituto.modulo.tree</field>
+            <field name="model">instituto.modulo</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="ciclo_id"/>
+                    <field name="professor_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_instituto_alumne_tree" model="ir.ui.view">
+            <field name="name">instituto.alumne.tree</field>
+            <field name="model">instituto.alumne</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="modulo_ids" widget="many2many_tags"/>
+                </tree>
             </field>
         </record>
 
@@ -167,14 +130,12 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="tarea"/>
-                    <field name="prioridad"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click">
                                 <div class="oe_kanban_details">
                                     <strong class="o_kanban_record_title"><field name="tarea"/></strong>
                                     <div>Prioridad: <field name="prioridad"/></div>
-                                    <div>Fecha: <field name="fecha_asignada"/></div>
                                     <div>Límite: <field name="data_limit"/></div>
                                 </div>
                             </div>
@@ -191,9 +152,6 @@
                 <calendar string="Calendario de Tareas" date_start="data_limit" color="user_id" mode="month">
                     <field name="tarea"/>
                     <field name="user_id" avatar_field="image_128"/>
-                    <field name="prioridad"/>
-                    <field name="fecha_asignada"/>
-                    <field name="categoria_id"/>
                 </calendar>
             </field>
         </record>
