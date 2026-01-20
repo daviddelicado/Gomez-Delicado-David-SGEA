@@ -5,3 +5,4 @@ postgres_data_.tars
 postgres_backup.tar
 .idea/*
 *.pyc*
+*__pycache__*
