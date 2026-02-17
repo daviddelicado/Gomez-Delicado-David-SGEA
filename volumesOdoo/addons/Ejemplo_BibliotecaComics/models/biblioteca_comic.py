@@ -42,7 +42,7 @@ class BibliotecaComic(models.Model):
 
     dias_lanzamiento = fields.Integer(
         string='Días desde lanzamiento',
-        compute='_compute_dias_lanzamiento',
+            compute='_compute_dias_lanzamiento',
         inverse='_inverse_dias_lanzamiento',
         search='_search_dias_lanzamiento'
     )
