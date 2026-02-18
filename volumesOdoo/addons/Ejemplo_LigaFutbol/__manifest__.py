@@ -22,6 +22,8 @@
         'views/liga_partido.xml',
         'views/liga_equipo_clasificacion.xml',
         'wizard/liga_equipo_wizard.xml',
+        'wizard/liga_partido_wizard.xml',
+        'reports/liga_partido_report.xml',
     ],
     'installable': True,
     'application': True,

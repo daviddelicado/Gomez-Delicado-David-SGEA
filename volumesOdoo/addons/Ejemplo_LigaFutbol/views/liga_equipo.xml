@@ -23,7 +23,7 @@
          FORM VIEW: Vista de formulario para editar un equipo
          =============================================================== -->
     <record id="liga_equipo_view_form" model="ir.ui.view">
-        <field name="name">Formulario de equipo de futbol</field>
+        <field name="name">Formulario de equípo de futbol</field>
         <field name="model">liga.equipo</field>
         <field name="arch" type="xml">
             <form string="Ficha del equipo">
@@ -82,7 +82,7 @@
                 <field name="nombre"/>
                 <field name="escudo"/>
                 <templates>
-                    <t t-name="kanban-boox">
+                    <t t-name="kanban-box">
                         <div class="oe_kanban_global_click o_kanban_record">
                             <div class="o_kanban_image_inner_pic">
                                 <img t-att-src="'/web/image/liga.equipo/' + record.id + '/escudo'"

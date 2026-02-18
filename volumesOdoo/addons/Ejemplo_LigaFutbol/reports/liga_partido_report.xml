@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_liga_partido" model="ir.actions.report">
+        <field name="name">Resultat del Partit</field>
+        <field name="model">liga.partido</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Ejemplo_LigaFutbol.report_partido_template</field>
+        <field name="report_file">Ejemplo_LigaFutbol.report_partido_template</field>
+        <field name="print_report_name">'Partit - %s' % (object.display_name)</field>
+        <field name="binding_model_id" ref="model_liga_partido"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_partido_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center mt-4 mb-4">
+                            <h1>Informe de Partit</h1>
+                            <h3>Lliga de Futbol</h3>
+                        </div>
+
+                        <div class="container" style="border: 2px solid #000; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                            <div class="row align-items-center text-center">
+
+                                <div class="col-4">
+                                    <h3 t-field="doc.equipo_casa.nombre" style="color: #2c3e50;"/>
+                                    <div t-if="doc.equipo_casa.escudo">
+                                        <img t-att-src="image_data_uri(doc.equipo_casa.escudo)" style="max-height: 100px;"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <h1 style="font-size: 50px; font-weight: bold;">
+                                        <span t-field="doc.goles_casa"/> - <span t-field="doc.goles_fuera"/>
+                                    </h1>
+                                    <p class="text-muted">Resultat Final</p>
+                                </div>
+
+                                <div class="col-4">
+                                    <h3 t-field="doc.equipo_fuera.nombre" style="color: #2c3e50;"/>
+                                    <div t-if="doc.equipo_fuera.escudo">
+                                        <img t-att-src="image_data_uri(doc.equipo_fuera.escudo)" style="max-height: 100px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Equip Local</th>
+                                            <th>Gols Local</th>
+                                            <th>Gols Visitant</th>
+                                            <th>Equip Visitant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span t-field="doc.equipo_casa.nombre"/></td>
+                                            <td><span t-field="doc.goles_casa"/></td>
+                                            <td><span t-field="doc.goles_fuera"/></td>
+                                            <td><span t-field="doc.equipo_fuera.nombre"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

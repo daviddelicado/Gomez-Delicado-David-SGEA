@@ -48,7 +48,8 @@ class LigaEquipo(models.Model):
             record.jugados = record.victorias + record.empates + record.derrotas
 
     # Campo computado: total de puntos. Se calcula como (3 * victorias) + empates.
-    puntos = fields.Integer(compute="_compute_puntos", default=0, store=True)
+    # puntos = fields.Integer(compute="_compute_puntos", default=0, store=True)
+    puntos = fields.Integer(string='Puntos', default=0, store=True)
 
     @api.depends('victorias', 'empates')
     def _compute_puntos(self):

@@ -1,38 +1,19 @@
 # -*- coding: utf-8 -*-
 from odoo import http
 from odoo.http import request
-import json
+import json  # <--- Faltaba esto para que funcione json.dumps
 
-# ============================
-#  Controlador público HTTP
-# ============================
 
-# Esta clase maneja rutas web personalizadas que devuelven información de equipos en formato JSON
 class Main(http.Controller):
 
     # ------------------------------------------------------
-    # Ruta: /ligafutbol/equipo/json
-    # - Tipo: HTTP GET
-    # - Autenticación: Ninguna ("auth='none'")
-    # - Propósito: Devolver la lista de equipos y sus estadísticas en JSON
+    # TU CÓDIGO EXISTENTE (Corregido)
     # ------------------------------------------------------
-    @http.route('/ligafutbol/equipo/json', type='http', auth='none', csrf=False)
+    @http.route('/ligafutbol/equipo/json', type='http', auth='public', csrf=False)
     def obtenerDatosEquiposJSON(self):
-        """
-        Esta función se ejecuta cuando accedemos a la URL:
-            http://localhost:8069/ligafutbol/equipo/json
-        Y devuelve la información de los equipos en formato JSON.
-        No requiere autenticación.
-        """
-
-        # Obtenemos todos los registros del modelo liga.equipo usando sudo() para evitar restricciones
         equipos = request.env['liga.equipo'].sudo().search([])
-
-        # Lista para almacenar la información que enviaremos en JSON
         listaDatosEquipos = []
-
         for equipo in equipos:
-            # Convertimos los datos del equipo a una lista simple de valores
             listaDatosEquipos.append([
                 equipo.nombre,
                 str(equipo.fecha_fundacion),
@@ -42,9 +23,27 @@ class Main(http.Controller):
                 equipo.empates,
                 equipo.derrotas,
             ])
+        return json.dumps(listaDatosEquipos)
 
-        # Convertimos la lista a formato JSON (cadena de texto)
-        json_result = json.dumps(listaDatosEquipos)
+    # ------------------------------------------------------
+    # NUEVA FUNCIONALIDAD: ELIMINAR EMPATES
+    # ------------------------------------------------------
+    @http.route('/eliminarempates', type='http', auth='public', csrf=False)
+    def eliminar_empates(self, **kw):
+        """
+        Recorre todos los partidos. Si hay empate, lo borra y cuenta uno más.
+        Devuelve el total de partidos eliminados.
+        """
+        # 1. Buscamos TODOS los partidos con permisos de superusuario (sudo)
+        partidos = request.env['liga.partido'].sudo().search([])
 
-        # Devolvemos la respuesta al navegador
-        return json_result
+        contador = 0
+
+        # 2. Recorremos buscando empates
+        for partido in partidos:
+            if partido.goles_casa == partido.goles_fuera:
+                partido.unlink()  # Borramos el partido
+                contador += 1
+
+        # 3. Devolvemos el mensaje
+        return f"Se han eliminado {contador} partidos que estaban empatados."

@@ -47,29 +47,37 @@ class LigaPartido(models.Model):
             # Resetea estadísticas
             equipo.victorias = equipo.empates = equipo.derrotas = 0
             equipo.goles_a_favor = equipo.goles_en_contra = 0
+            equipo.puntos = 0
 
             for partido in self.env['liga.partido'].search([]):
+                diff = abs(partido.goles_casa - partido.goles_fuera)
                 # Si el equipo jugó como local
                 if partido.equipo_casa == equipo:
-                    if partido.goles_casa > partido.goles_fuera:
-                        equipo.victorias += 1
-                    elif partido.goles_casa < partido.goles_fuera:
-                        equipo.derrotas += 1
-                    else:
-                        equipo.empates += 1
                     equipo.goles_a_favor += partido.goles_casa
                     equipo.goles_en_contra += partido.goles_fuera
+                    if partido.goles_casa > partido.goles_fuera:
+                        equipo.victorias += 1
+                        equipo.puntos += 4 if diff >= 4 else 3
+                    elif partido.goles_casa < partido.goles_fuera:
+                        equipo.derrotas += 1
+                        equipo.puntos += -1 if diff >= 4 else 0
+                    else:
+                        equipo.empates += 1
+                        equipo.puntos += 1
 
                 # Si el equipo jugó como visitante
                 if partido.equipo_fuera == equipo:
-                    if partido.goles_fuera > partido.goles_casa:
-                        equipo.victorias += 1
-                    elif partido.goles_fuera < partido.goles_casa:
-                        equipo.derrotas += 1
-                    else:
-                        equipo.empates += 1
                     equipo.goles_a_favor += partido.goles_fuera
                     equipo.goles_en_contra += partido.goles_casa
+                    if partido.goles_fuera > partido.goles_casa:
+                        equipo.victorias += 1
+                        equipo.puntos += 4 if diff >= 4 else 3
+                    elif partido.goles_fuera < partido.goles_casa:
+                        equipo.derrotas += 1
+                        equipo.puntos += -1 if diff >= 4 else 0
+                    else:
+                        equipo.empates += 1
+                        equipo.puntos += 1
 
     # Cada vez que se modifica un campo de goles o equipos, actualiza la clasificación
     @api.onchange('equipo_casa', 'goles_casa', 'equipo_fuera', 'goles_fuera')
@@ -88,3 +96,17 @@ class LigaPartido(models.Model):
         res = super().unlink()
         self.actualizoRegistrosEquipo()
         return res
+
+    def sumar_gols_casa(self):
+        partits = self.search([])
+        for p in partits:
+            p.write({'goles_casa': p.goles_casa + 2})
+        self.actualizoRegistrosEquipo()
+        return True
+
+    def sumar_gols_visitant(self):
+        partits = self.search([])
+        for p in partits:
+            p.write({'goles_fuera': p.goles_fuera + 2})
+        self.actualizoRegistrosEquipo()
+        return True

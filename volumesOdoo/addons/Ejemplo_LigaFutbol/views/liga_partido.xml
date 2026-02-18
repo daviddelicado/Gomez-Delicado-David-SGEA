@@ -7,7 +7,7 @@
     <record id="liga_partido_action" model="ir.actions.act_window">
         <field name="name">Partidos de la liga</field>
         <field name="res_model">liga.partido</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,tree,form,graph</field>
     </record>
 
     <menuitem name="Partidos de la liga"
@@ -23,6 +23,18 @@
         <field name="model">liga.partido</field>
         <field name="arch" type="xml">
             <form string="Registro de Partido">
+                 <header>
+                    <button name="sumar_gols_casa"
+                            string="+2 Gols Casa"
+                            type="object"
+                            class="oe_highlight"
+                            confirm="Segur que vols sumar 2 gols a tots els locals?"/>
+
+                    <button name="sumar_gols_visitant"
+                            string="+2 Gols Visitant"
+                            type="object"
+                            confirm="Segur que vols sumar 2 gols a tots els visitants?"/>
+                </header>
                 <group>
                     <group>
                         <field name="equipo_casa"/>
@@ -34,6 +46,17 @@
                     </group>
                 </group>
             </form>
+        </field>
+    </record>
+
+    <record id="liga_partido_view_graph" model="ir.ui.view">
+        <field name="name">liga.partido.graph</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <graph string="Gols a Casa" type="bar">
+                <field name="equipo_casa" type="row"/>
+                <field name="goles_casa" type="measure"/>
+            </graph>
         </field>
     </record>
 
