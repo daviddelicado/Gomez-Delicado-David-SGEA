@@ -1,0 +1,9 @@
+<odoo>
+    <menuitem id="menu_f1_root" name="Campeonato F1" sequence="10"/>
+
+    <menuitem id="menu_f1_pilotos" name="Pilotos" parent="menu_f1_root" action="action_f1_piloto" sequence="10"/>
+    <menuitem id="menu_f1_escuderias" name="Escuderías" parent="menu_f1_root" action="action_f1_escuderia" sequence="20"/>
+    <menuitem id="menu_f1_carreras" name="Carreras" parent="menu_f1_root" action="action_f1_carrera" sequence="30"/>
+    <menuitem id="menu_f1_clasificacion" name="Resultados de Carrera" parent="menu_f1_root" action="action_f1_resultado" sequence="40"/>
+    <menuitem id="menu_f1_wizard_piloto" name="Añadir Piloto Rápido" parent="menu_f1_root" action="action_wizard_piloto" sequence="50"/>
+</odoo>

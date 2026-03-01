@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <report
+            id="report_f1_piloto"
+            model="f1.piloto"
+            string="Hoja de Ruta del Piloto"
+            report_type="qweb-pdf"
+            name="Ejemplo_CampeonatoF1.report_piloto_template"
+            file="Ejemplo_CampeonatoF1.report_piloto_template"
+        />
+
+        <template id="report_piloto_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Hoja de Ruta: <span t-field="doc.name"/> <span t-field="doc.apellidos"/></h2>
+                            <p><strong>Total KM recorridos en la temporada: </strong> <span t-field="doc.total_km"/></p>
+
+                            <h3>Carreras Programadas</h3>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Fecha</th>
+                                        <th>Gran Premio</th>
+                                        <th>Categoría</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.inscripcion_ids" t-as="carrera">
+                                        <td><span t-field="carrera.name"/></td>
+                                        <td><span t-field="carrera.fecha_inicio"/></td>
+                                        <td><span t-field="carrera.gran_premio_id.name"/></td>
+                                        <td><span t-field="carrera.categoria"/></td>
+                                        <td><span t-field="carrera.estado"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

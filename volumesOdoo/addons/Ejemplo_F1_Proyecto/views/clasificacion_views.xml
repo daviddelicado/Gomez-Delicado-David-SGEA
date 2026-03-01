@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_f1_clasificacion_tree" model="ir.ui.view">
+        <field name="name">f1.clasificacion.tree</field>
+        <field name="model">f1.clasificacion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="carrera_id"/>
+                <field name="piloto_id"/>
+                <field name="posicion"/>
+                <field name="puntos_ganados"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_f1_clasificacion" model="ir.actions.act_window">
+        <field name="name">Resultados de Carreras</field>
+        <field name="res_model">f1.clasificacion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_f1_clasificacion" name="Clasificación GP" parent="menu_f1_root" action="action_f1_clasificacion" sequence="40"/>
+</odoo>

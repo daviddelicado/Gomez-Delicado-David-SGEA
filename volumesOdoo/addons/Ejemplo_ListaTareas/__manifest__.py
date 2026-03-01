@@ -44,6 +44,6 @@
         'security/ir.model.access.csv',
 
         # Archivo XML con las vistas, menús y acciones del modelo
-        'views/views.xml',
+        'views/menu_views.xml',
     ]
 }
