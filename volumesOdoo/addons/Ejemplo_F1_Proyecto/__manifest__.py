@@ -1,5 +1,5 @@
 {
-    'name': 'Campeonato F1 Manager',
+    'name': 'Proyecto F1',
     'version': '1.0',
     'summary': 'Gestión del Campeonato Mundial de Fórmula 1',
     'description': 'Módulo para gestionar escuderías, pilotos, carreras y clasificación.',
