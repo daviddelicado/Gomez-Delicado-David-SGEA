@@ -20,7 +20,6 @@ class F1Piloto(models.Model):
 
     clasificacion_ids = fields.One2many('f1.clasificacion', 'piloto_id', string='Resultados')
 
-    # Requisito: Método 1 (Campo computado)
     puntos_totales = fields.Integer(
         string='Puntos Totales',
         compute='_compute_puntos_totales',
@@ -32,7 +31,6 @@ class F1Piloto(models.Model):
         for piloto in self:
             piloto.puntos_totales = sum(piloto.clasificacion_ids.mapped('puntos_ganados'))
 
-    # Requisito: Método 2 (Constraint)
     @api.constrains('name', 'apellido')
     def _check_nombres(self):
         for record in self:

@@ -8,7 +8,6 @@ class F1Clasificacion(models.Model):
     piloto_id = fields.Many2one('f1.piloto', string='Piloto', required=True)
     posicion = fields.Integer(string='Posición Final', required=True)
 
-    # Requisito: Método 3 (Campo computado)
     puntos_ganados = fields.Integer(string='Puntos Conseguidos', compute='_compute_puntos', store=True)
 
     @api.depends('posicion')
