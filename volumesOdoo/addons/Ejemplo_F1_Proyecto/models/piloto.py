@@ -6,6 +6,7 @@ class F1Piloto(models.Model):
     _name = 'f1.piloto'
     _description = 'Pilotos de Formula 1'
 
+    image = fields.Image(string='Foto del Piloto', max_width=1024, max_height=1024)
     name = fields.Char(string='Nombre', required=True)
     apellido = fields.Char(string='Apellido', required=True)
     nacionalidad = fields.Char(string='Nacionalidad')
