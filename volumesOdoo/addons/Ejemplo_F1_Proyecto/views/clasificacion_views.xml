@@ -4,7 +4,7 @@
         <field name="name">f1.clasificacion.tree</field>
         <field name="model">f1.clasificacion</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree editable="bottom">
                 <field name="carrera_id"/>
                 <field name="piloto_id"/>
                 <field name="posicion"/>
@@ -13,11 +13,9 @@
         </field>
     </record>
 
-    <record id="action_f1_clasificacion" model="ir.actions.act_window">
-        <field name="name">Resultados de Carreras</field>
+    <record id="action_f1_resultado" model="ir.actions.act_window">
+        <field name="name">Resultados de Carrera</field>
         <field name="res_model">f1.clasificacion</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <menuitem id="menu_f1_clasificacion" name="Clasificación GP" parent="menu_f1_root" action="action_f1_clasificacion" sequence="40"/>
 </odoo>

@@ -12,12 +12,31 @@
         </field>
     </record>
 
+    <record id="view_f1_escuderia_form" model="ir.ui.view">
+        <field name="name">f1.escuderia.form</field>
+        <field name="model">f1.escuderia</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="nacionalidad"/>
+                        <field name="jefe_equipo"/>
+                        <field name="presupuesto"/>
+                    </group>
+                    <notebook>
+                        <page string="Pilotos">
+                            <field name="piloto_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="action_f1_escuderia" model="ir.actions.act_window">
         <field name="name">Escuderías</field>
         <field name="res_model">f1.escuderia</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <menuitem id="menu_f1_root" name="F1 Manager" sequence="10"/>
-    <menuitem id="menu_f1_escuderia" name="Escuderías" parent="menu_f1_root" action="action_f1_escuderia" sequence="10"/>
 </odoo>

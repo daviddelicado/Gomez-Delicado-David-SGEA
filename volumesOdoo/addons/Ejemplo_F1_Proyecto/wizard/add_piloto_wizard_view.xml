@@ -18,12 +18,10 @@
         </field>
     </record>
 
-    <record id="action_f1_add_piloto_wizard" model="ir.actions.act_window">
+    <record id="action_wizard_piloto" model="ir.actions.act_window">
         <field name="name">Añadir Piloto Rápido</field>
         <field name="res_model">f1.add.piloto.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
-
-    <menuitem id="menu_f1_add_piloto_wizard" name="Wizard: Añadir Piloto" parent="menu_f1_root" action="action_f1_add_piloto_wizard" sequence="50"/>
 </odoo>

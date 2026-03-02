@@ -26,8 +26,6 @@
     <record id="action_f1_carrera" model="ir.actions.act_window">
         <field name="name">Grandes Premios</field>
         <field name="res_model">f1.carrera</field>
-        <field name="view_mode">tree,calendar,form</field>
+        <field name="view_mode">calendar,tree,form</field>
     </record>
-
-    <menuitem id="menu_f1_carrera" name="Carreras" parent="menu_f1_root" action="action_f1_carrera" sequence="30"/>
 </odoo>

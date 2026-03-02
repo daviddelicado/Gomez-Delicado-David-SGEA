@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_f1_piloto,f1.piloto,model_f1_piloto,base.group_user,1,1,1,1
-access_f1_escuderia,f1.escuderia,model_f1_escuderia,base.group_user,1,1,1,1
-access_f1_carrera,f1.carrera,model_f1_carrera,base.group_user,1,1,1,1
-access_f1_clasificacion,f1.clasificacion,model_f1_clasificacion,base.group_user,1,1,1,1
-access_f1_add_piloto_wizard,f1.add.piloto.wizard,model_f1_add_piloto_wizard,base.group_user,1,1,1,1
+access_f1_piloto,f1.piloto,model_f1_piloto,,1,1,1,1
+access_f1_escuderia,f1.escuderia,model_f1_escuderia,,1,1,1,1
+access_f1_carrera,f1.carrera,model_f1_carrera,,1,1,1,1
+access_f1_clasificacion,f1.clasificacion,model_f1_clasificacion,,1,1,1,1
+access_f1_add_piloto_wizard,f1.add.piloto.wizard,model_f1_add_piloto_wizard,,1,1,1,1

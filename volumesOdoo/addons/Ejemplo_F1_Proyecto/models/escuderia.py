@@ -7,4 +7,5 @@ class F1Escuderia(models.Model):
     name = fields.Char(string='Nombre Escudería', required=True)
     nacionalidad = fields.Char(string='Nacionalidad')
     jefe_equipo = fields.Char(string='Team Principal')
+    presupuesto = fields.Float(string='Presupuesto (M$)')
     piloto_ids = fields.One2many('f1.piloto', 'escuderia_id', string='Pilotos')

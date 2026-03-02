@@ -8,6 +8,3 @@ class F1Carrera(models.Model):
     circuito = fields.Char(string='Circuito')
     date_start = fields.Datetime(string='Inicio del Evento', required=True)
     date_stop = fields.Datetime(string='Fin del Evento')
-    libres_hora = fields.Datetime(string='Entrenamientos Libres')
-    cuali_hora = fields.Datetime(string='Clasificación (Sábado)')
-    carrera_hora = fields.Datetime(string='Carrera (Domingo)')

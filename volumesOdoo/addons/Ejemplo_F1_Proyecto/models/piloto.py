@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class F1Piloto(models.Model):
@@ -9,13 +10,19 @@ class F1Piloto(models.Model):
     apellido = fields.Char(string='Apellido', required=True)
     nacionalidad = fields.Char(string='Nacionalidad')
     escuderia_id = fields.Many2one('f1.escuderia', string='Escudería')
-    victorias = fields.Integer(string='Victorias Totales', default=0)
-    titulos = fields.Integer(string='Campeonatos del Mundo', default=0)
+
+    # Requisito: Estados para colores en vistas
+    estado = fields.Selection([
+        ('activo', 'Activo'),
+        ('lesionado', 'Lesionado'),
+        ('retirado', 'Retirado')
+    ], string='Estado', default='activo')
 
     clasificacion_ids = fields.One2many('f1.clasificacion', 'piloto_id', string='Resultados')
 
+    # Requisito: Método 1 (Campo computado)
     puntos_totales = fields.Integer(
-        string='Puntos en el Mundial',
+        string='Puntos Totales',
         compute='_compute_puntos_totales',
         store=True
     )
@@ -24,3 +31,10 @@ class F1Piloto(models.Model):
     def _compute_puntos_totales(self):
         for piloto in self:
             piloto.puntos_totales = sum(piloto.clasificacion_ids.mapped('puntos_ganados'))
+
+    # Requisito: Método 2 (Constraint)
+    @api.constrains('name', 'apellido')
+    def _check_nombres(self):
+        for record in self:
+            if record.name == record.apellido:
+                raise ValidationError("El nombre y el apellido no pueden ser iguales.")
