@@ -25,7 +25,7 @@
                 <field name="edad"/>
                 <field name="escuderia_id"/>
                 <field name="estado"/>
-                <field name="puntos_totales" sum="Total Puntos"/>
+                <field name="puntos_totales"/>
             </tree>
         </field>
     </record>

@@ -19,6 +19,7 @@
                 <field name="name"/>
                 <field name="circuito"/>
                 <field name="date_start"/>
+                <field name="date_stop"/>
             </tree>
         </field>
     </record>

@@ -15,11 +15,44 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
+                        <div t-if="o.image" class="text-center mb-4">
+                            <span t-field="o.image" t-options="{'widget': 'image', 'style': 'max-width: 150px; max-height: 150px;'}"/>
+                        </div>
                         <h2>Ficha del Piloto: <span t-field="o.name"/> <span t-field="o.apellido"/></h2>
                         <p><strong>Nacionalidad:</strong> <span t-field="o.nacionalidad"/></p>
                         <p><strong>Escudería:</strong> <span t-field="o.escuderia_id.name"/></p>
+                        <p><strong>Edad: </strong> <span t-field="o.edad"/></p>
                         <p><strong>Estado Actual:</strong> <span t-field="o.estado"/></p>
                         <h3>Puntos Totales de la Temporada: <span t-field="o.puntos_totales"/></h3>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="action_report_escuderia" model="ir.actions.report">
+        <field name="name">Ficha de Escudería</field>
+        <field name="model">f1.escuderia</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Ejemplo_F1_Proyecto.report_escuderia_template</field>
+        <field name="report_file">Ejemplo_F1_Proyecto.report_escuderia_template</field>
+        <field name="binding_model_id" ref="model_f1_escuderia"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_escuderia_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <div t-if="o.logo" class="text-center mb-4">
+                            <span t-field="o.logo" t-options="{'widget': 'image', 'style': 'max-width: 200px; max-height: 200px;'}"/>
+                        </div>
+
+                        <h2>Datos de la Escudería: <span t-field="o.name"/></h2>
+                        <p><strong>Nacionalidad:</strong> <span t-field="o.nacionalidad"/></p>
+                        <p><strong>Team Principal:</strong> <span t-field="o.jefe_equipo"/></p>
+                        <p><strong>Presupuesto (M$):</strong> <span t-field="o.presupuesto"/> Millones</p>
                     </div>
                 </t>
             </t>

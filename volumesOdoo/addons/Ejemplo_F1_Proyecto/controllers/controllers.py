@@ -1,32 +1,25 @@
-from odoo import http  # Importa el módulo http de Odoo para crear rutas (URLs)
-from odoo.http import request  # 'request' permite interactuar con la base de datos desde la web
-import json  # Librería estándar de Python para formatear los datos a formato JSON
+from odoo import http
+from odoo.http import request  # Necesario para acceder a la base de datos desde fuera
 
 
-class F1Controller(http.Controller):  # Clase controladora que hereda de http.Controller
+class F1Controller(http.Controller):
 
-    # @http.route crea la URL '/f1/pilotos'.
-    # auth='public' significa que cualquiera puede entrar sin estar logueado.
-    # type='http' y methods=['GET'] indica que es una petición web normal de solo lectura.
-    @http.route('/f1/pilotos', auth='public', type='http', methods=['GET'])
-    def get_pilotos(self, **kw):
-        # request.env[...] accede al modelo.
-        # .sudo() da permisos de administrador para saltar posibles restricciones de seguridad.
-        # .search([]) busca y devuelve TODOS los registros de pilotos.
-        pilotos = request.env['f1.piloto'].sudo().search([])
-        data = []  # Lista vacía que guardará los datos finales
+    # Ruta web que espera recibir un número entero (<int:piloto_id>) al final de la URL
+    @http.route('/f1/piloto/<int:piloto_id>', auth='public', type='http')
+    def estado_piloto(self, piloto_id, **kw):
+        # Usamos request.env para entrar al modelo de pilotos.
+        # sudo() se usa porque el usuario es 'public' (no ha iniciado sesión) y necesita permisos de lectura.
+        piloto = request.env['f1.piloto'].sudo().browse(piloto_id)
 
-        for p in pilotos:
-            # Añadimos a la lista un diccionario (JSON) con los datos clave de cada piloto
-            data.append({
-                'nombre': f"{p.name} {p.apellido}",
-                'escuderia': p.escuderia_id.name if p.escuderia_id else "Sin equipo",  # Comprueba si tiene escudería
-                'puntos': p.puntos_totales
-            })
+        # Comprobamos si el piloto existe en la base de datos
+        if not piloto.exists():
+            return "<h1>Error: No se ha encontrado ningún piloto con ese ID.</h1>"
 
-        # Genera la respuesta HTTP enviando la lista 'data' convertida a texto JSON
-        # Configura las cabeceras (headers) para avisar al navegador de que es un archivo JSON.
-        return request.make_response(
-            json.dumps(data),
-            headers=[('Content-Type', 'application/json')]
-        )
+        # Si existe, extraemos su nombre, apellido y estado, y lo devolvemos maquetado en HTML simple
+        html_result = f"""
+            <h2>Consulta de Estado - Fórmula 1</h2>
+            <p><strong>Piloto:</strong> {piloto.name} {piloto.apellido}</p>
+            <p><strong>Estado actual:</strong> <span style="color: blue;">{piloto.estado.upper()}</span></p>
+        """
+
+        return html_result

@@ -29,15 +29,26 @@ class F1Piloto(models.Model):
         store=True
     )
 
+    # para evitar duplicados
+    _sql_constraints = [
+        (
+            'piloto_nombre_apellido_unique',  # Nombre técnico de la restricción
+            'UNIQUE (name, apellido)',  # Regla SQL: la combinación de ambos debe ser única
+            'Ya existe un piloto con ese nombre y apellido. ¡No puedes duplicarlos!'  # Mensaje de error
+        )
+    ]
+
     @api.depends('clasificacion_ids.puntos_ganados') # Se recalcula si cambian los puntos ganados en sus clasificaciones.
     def _compute_puntos_totales(self):
         for piloto in self:
             # Suma total iterando sobre todos sus registros de clasificacion.
             piloto.puntos_totales = sum(piloto.clasificacion_ids.mapped('puntos_ganados'))
 
-    @api.constrains('name', 'apellido') # Restricción o validación en base de datos.
+    @api.constrains('name', 'apellido')  # Se ejecuta cuando cambia el nombre o apellido
     def _check_nombres(self):
         for record in self:
-            # Lanza un pop-up de error bloqueando el guardado si nombre y apellido son idénticos.
-            if record.name == record.apellido:
-                raise ValidationError("El nombre y el apellido no pueden ser iguales.")
+            # Añadimos comprobación de que no sean None para evitar errores de comparación
+            if record.name and record.apellido:
+                # Comparamos ignorando mayúsculas/minúsculas y espacios extra
+                if record.name.strip().lower() == record.apellido.strip().lower():
+                    raise ValidationError("Error: El nombre y el apellido no pueden ser iguales.")
