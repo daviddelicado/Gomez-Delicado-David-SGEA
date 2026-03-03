@@ -22,6 +22,7 @@
             <tree decoration-danger="estado == 'lesionado'" decoration-info="estado == 'activo'" decoration-muted="estado == 'retirado'">
                 <field name="name"/>
                 <field name="apellido"/>
+                <field name="edad"/>
                 <field name="escuderia_id"/>
                 <field name="estado"/>
                 <field name="puntos_totales" sum="Total Puntos"/>
@@ -48,6 +49,7 @@
                     <group>
                         <field name="name"/>
                         <field name="apellido"/>
+                        <field name="edad"/>
                         <field name="nacionalidad"/>
                         <field name="escuderia_id"/>
                         <field name="puntos_totales"/>

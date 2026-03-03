@@ -8,6 +8,7 @@ class F1Piloto(models.Model):
     image = fields.Image(string='Foto del Piloto', max_width=1024, max_height=1024)
     name = fields.Char(string='Nombre', required=True)
     apellido = fields.Char(string='Apellido', required=True)
+    edad = fields.Integer(string='Edad', required=True)
     nacionalidad = fields.Char(string='Nacionalidad')
     escuderia_id = fields.Many2one('f1.escuderia', string='Escudería') # Enlace a la tabla escudería.
 
